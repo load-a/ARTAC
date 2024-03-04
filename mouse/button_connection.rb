@@ -1,5 +1,4 @@
-
-
+require 'app/buttons/button.rb'
 
 module ButtonConnection
 
@@ -13,33 +12,22 @@ module ButtonConnection
 		!current_button.nil?
 	end
 
-	def click_button
-		current_button.click
-	end
-
-	def press_button
-		current_button.click if current_button.kind_of? ClickButton
-		current_button.toggle if current_button.kind_of? ToggleButton		
-	end
-
-	def release_button
-		return if current_button.kind_of? ToggleButton
-		current_button.release
-	end
-
-	def hold_button
-		if click?
-			press_button 
-		elsif held? and current_button.kind_of? ClickButton
-			click_button
+	def interact_with_button
+		if Mouse.click?
+			current_button.hold if current_button.kind_of? HoldButton
+			current_button.click if current_button.kind_of? ClickButton
+			current_button.toggle if current_button.kind_of? ToggleButton		
+		elsif Mouse.hold?
+			current_button.hold if current_button.kind_of? HoldButton
+		elsif Mouse.up?
+			current_button.release unless current_button.kind_of? ToggleButton
 		end
-		button.use_secondary_background_color
 	end
 
-	def toggle_button
-		return if current_button.kind_of? ClickButton
-		current_button.toggle
+	def highlight_button
+		Mouse.current_button.highlight
 	end
+
 
 	# not implemented yet
 	# def highlight_button

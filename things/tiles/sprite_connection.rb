@@ -5,16 +5,16 @@ module SpriteConnection
 
 	# @note: Moves the sprite image along with the actual object it's attached to.
 	# @return [Void]
-	def move_relative_to_position(distances)
+	def move_relative_to_location(distances)
 		super
-		sprite.move_relative_to_position(distances)
+		sprite.move_relative_to_location(distances)
 	end
 
-	# @param location [Array<Integer>] The coordinates of the new position.
+	# @param location [Array<Integer>] The coordinates of the new location.
 	# @return [Void]
-	def move_to_absolute_position(location)
+	def move_to_absolute_location(location)
 		super
-		sprite.move_to_absolute_position(location)
+		sprite.move_to_absolute_location(location)
 	end
 
 	# @param new_sprite [Array<Integer>, Symbol]

@@ -26,16 +26,6 @@ class Actor < TileFoundation
 		"%08b%016b%016b%016b%016b%08b" % [ 3, location[0], location[1], size[0], size[0], @sheet[:name][0].bytes[0] ]
 	end
 
-	# Sets a rectangular boundary the actor can move within.
-	# @note Does not function properly.
-	# @param bottom_left_point [Array<Integer>] The bottom left corner of the boundary.
-	# @param top_right_point [Array<Integer>]
-	# @return [Void]
-	def assign_movement_range!(bottom_left_point = SCREEN_RANGE_X, top_right_point = SCREEN_RANGE_Y)
-		@range_x = ( lattice.data[:position][0]..lattice.data[:opposite_int][0] )
-		@range_y = ( lattice.data[:position][1]..lattice.data[:opposite_int][1] )
-	end
-
 	# Checks if the provided coordinates are withing the character's movement range.
 	# @param location [Array<Integer>] The coordinates being checked.
 	def within_limits_at?(location)

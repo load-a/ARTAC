@@ -51,7 +51,7 @@ module DebugTools
 	# This can be useful for rendering hitboxes.
 	def self.render_borders(list, args)
 		args.outputs.primitives << list.map { |e|
-			e.primitives
+			e.rect
 		}
 	end
 

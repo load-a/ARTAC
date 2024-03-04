@@ -54,7 +54,7 @@ class GameFile < ArgsObject
 		# @param file_name [String]
 		# @return void
 		def load(file_name)
-			Level.all.clear
+			Level.delete_every!(Thing)
 
 			_generate_path(file_name)
 			@start_index = 0

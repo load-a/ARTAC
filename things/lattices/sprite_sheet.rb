@@ -87,6 +87,6 @@ def SPRITESHEET.primitives
 	].flatten
 end
 
-Level.remove(SPRITESHEET)
+Level.delete!(SPRITESHEET)
 
 

@@ -1,5 +1,5 @@
-# The object's position in space (x and y). 
-# @note A "point" refers to the attributes X and Y together in an array. This term is used throughout the program.
+# Imparts X and Y coordinates to an object and provides methods for manipulating them.
+# @note Throughout the program, "point" will be used synonymously with #location.
 
 module Location
 
@@ -14,13 +14,20 @@ module Location
 	def location
 		[x, y]
 	end
-	alias position location
 	alias base location
 
 	# @note Only meant to be used with object initialization.
 	# @return [Void]
 	def set_location!(location)
 		self.x, self.y = location
+	end
+
+	def set_x!(new_x)
+		self.x = new_x
+	end
+
+	def set_y!(new_y)
+		self.y = new_y
 	end
 
 end

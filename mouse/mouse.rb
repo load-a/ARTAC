@@ -83,5 +83,20 @@ class Mouse < ArgsObject
 			}
 		end
 
+		def binary_signals
+			c = click? ? 1 : 0
+			h = hold? ? 1 : 0
+			r = release? ? 1 : 0
+
+			'%d%d%d' % [c,h,r]
+		end
+
+
+		def formatted_info
+			thing_ids = sees_in_list.map{|object| object.id}
+			button_ids = sees_in_list(Button.all).map{|object| object.id}
+			'L: %s, S(L): %s, S(B): %s, CHU: %s' % [location, thing_ids, button_ids, binary_signals]
+		end
+
 	end
 end

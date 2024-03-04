@@ -1,12 +1,11 @@
 require 'app/buttons/button.rb'
 
-class ClickButton < Button
-	def initialize(location, size, text = "CLICK BUTTON")
+class HoldButton < Button
+	def initialize(location, size, text = "HOLD BUTTON")
 		super
-		@timer = 0
 	end
 
-	def click
+	def hold
 		@state = true
 		resolve_color
 	end
@@ -15,5 +14,5 @@ class ClickButton < Button
 		@state = false
 		resolve_color
 	end
-
+	
 end

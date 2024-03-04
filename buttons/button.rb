@@ -8,13 +8,24 @@ class Button
 	@@id = 0
 	@@all = []
 
-	def self.all
-		@@all
+	class << self
+
+		def all
+			@@all
+		end
+
+		def all_primitives
+			all.map { |button| button.primitives }
+		end
+
+		def formatted_info
+			'Btn (%d)' % [all.length]
+		end
+		alias info formatted_info
+
 	end
 
-	def self.all_primitives
-		@@all.map { |button| button.primitives }
-	end
+	
 		
 	private
 		
@@ -47,8 +58,7 @@ class Button
 	end
 
 	public
-
-	attr_reader :state
+	attr_reader :state, :id
 
 	def primitives
 		[rect.merge(@border_color), text_hash, background_hash].reverse
@@ -83,6 +93,7 @@ class Button
 		@background_color = @highlight_background_color
 	end
 
+
 	def use_primary_background_transparancy
 		@background_transparancy = @primary_background_transparancy
 	end
@@ -94,6 +105,7 @@ class Button
 	def use_highlight_background_transparancy
 		@background_transparancy = @highlight_background_transparancy
 	end
+
 
 	def set_text
 		@text
@@ -113,7 +125,7 @@ class Button
 	end
 
 	def resolve_color
-		if @state
+		if state
 			use_secondary_background_color
 			use_secondary_background_transparancy
 
@@ -126,11 +138,11 @@ class Button
 	alias unhighlight resolve_color
 
 	def true?
-		@state == true
+		state == true
 	end
 
 	def false?
-		@state == false
+		state == false
 	end
 
 end

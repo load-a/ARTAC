@@ -80,11 +80,19 @@ class Scaffold
 		@difference_y = 0
 	end
 
+	def clear!
+		set_dimensions!([-1, -1], [0, 0])
+	end
+
 	def info
 		rect << {
 			cell_size: cell_size,
 			anchor: anchor_point
 		}
+	end
+
+	def formatted_info
+		'%s, %s, %s' % [location, size, cell_size]
 	end
 
 end
