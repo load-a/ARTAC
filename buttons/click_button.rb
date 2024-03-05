@@ -1,9 +1,9 @@
-require 'app/buttons/button.rb'
+require 'app/buttons/generic_button.rb'
 
-class ClickButton < Button
-	def initialize(location, size, text = "CLICK BUTTON")
-		super
-		@timer = 0
+# Represents buttons that are meant to be clicked and then immediately released
+class ClickButton < GenericButton
+	def initialize(location: [0,0], size: [150, 50], text: "CLICK BUTTON")
+		super(location: location, size: size, text: text)
 	end
 
 	def click
@@ -17,3 +17,8 @@ class ClickButton < Button
 	end
 
 end
+
+# The following block *must be* called for ClickButtons to work.
+# if Mouse.button.kind_of? ClickButton and Mouse.button.true? and !Mouse.click?
+# 	Mouse.button.release
+# end

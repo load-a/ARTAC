@@ -1,8 +1,8 @@
-require 'app/buttons/button.rb'
+require 'app/buttons/generic_button.rb'
 
-class ToggleButton < Button
-	def initialize(location, size, text = "TOGGLE BUTTON")
-		super
+class ToggleButton < GenericButton
+	def initialize(location: [0,0], size: [150, 50], text: "TOGGLE BUTTON")
+		super(location: location, size: size, text: text)
 	end
 
 	def toggle

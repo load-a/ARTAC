@@ -1,8 +1,8 @@
-require 'app/buttons/button.rb'
+require 'app/buttons/generic_button.rb'
 
-class HoldButton < Button
-	def initialize(location, size, text = "HOLD BUTTON")
-		super
+class HoldButton < GenericButton
+	def initialize(location: [0,0], size: [150, 50], text: "HOLD BUTTON")
+		super(location: location, size: size, text: text)
 	end
 
 	def hold

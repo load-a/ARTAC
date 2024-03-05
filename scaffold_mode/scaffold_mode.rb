@@ -18,6 +18,13 @@ def scaffold_mode args
 		else
 			SCAFFOLD.calculate_size_from_reference(Mouse.location)
 			SCAFFOLD.extend_non_negative_dimensions
+			args.outputs.solids << {
+				x: SCAFFOLD.anchor_point[0] - 6, 
+				y: SCAFFOLD.anchor_point[1] - 6, 
+				w: 12, 
+				h: 12,
+				a: 128
+			}.merge(Color.blue)
 		end
 
 	elsif Mouse.up? or Keyboard.letter_up == :shift

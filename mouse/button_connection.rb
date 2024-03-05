@@ -13,6 +13,8 @@ module ButtonConnection
 	end
 
 	def interact_with_button
+		return if current_button.nil?
+
 		if Mouse.click?
 			current_button.hold if current_button.kind_of? HoldButton
 			current_button.click if current_button.kind_of? ClickButton
@@ -25,7 +27,15 @@ module ButtonConnection
 	end
 
 	def highlight_button
+		return if current_button.nil?
 		Mouse.current_button.highlight
+	end
+
+	def release_click_buttons
+		# This is required for click buttons to function properly.
+		if Mouse.button.kind_of? ClickButton and Mouse.button.true? and !Mouse.click? 
+			Mouse.button.release
+		end
 	end
 
 
