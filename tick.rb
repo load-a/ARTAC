@@ -9,53 +9,53 @@ def tick args
 		SCAFFOLD.formatted_info, 
 		Level.formatted_info, 
 		Button.info, 
-		Mouse.button.to_s, 
+		args.state.window
 	]
 
 	# Commit SCAFFOLD to new Lattice
-	args.state.commit ||= ClickButton.new(location: [53, 10], text: "create lattice")	
-	if args.state.commit.true? and Level.every(Lattice).empty?
+	if ClickButton::commit_lattice.true? and Level.every(Lattice).empty?
 		Lattice.new(SCAFFOLD.location, SCAFFOLD.size.map {|e| e/SCAFFOLD.cell_size}, SCAFFOLD.cell_size)
 	end
 
 	# Clear SCAFFOLD
-	args.state.clear ||=  ClickButton.new(text: "clear lattice")
-	args.state.clear.put_right_of!(args.state.commit)
-	args.state.clear.align_vertically_with!(args.state.commit)
-	if args.state.clear.true?
+	ClickButton::clear_lattice.put_right_of!(ClickButton::commit_lattice)
+	ClickButton::clear_lattice.align_vertically_with!(ClickButton::commit_lattice)
+	if ClickButton::clear_lattice.true?
 		SCAFFOLD.clear!
 		Level.delete_every!(Lattice)
 	end
 
 	# Change Cell Size
-	args.state.cell ||= ClickButton.new(text: "cell size:")
-	args.state.cell.put_right_of!(args.state.clear)
-	args.state.cell.align_vertically_with!(args.state.commit)
-	args.state.cell.set_text!("cell size: " + (args.state.input_buffer == "" ? SCAFFOLD.cell_size.to_s : args.state.input_buffer))
-	args.state.cell.release if !Mouse.on?(args.state.click)	and args.state.cell.true?
+	ClickButton::cell_size.put_right_of!(ClickButton::clear_lattice)
+	ClickButton::cell_size.align_vertically_with!(ClickButton::commit_lattice)
+	ClickButton::cell_size.set_text!("cell size: " + (args.state.input_buffer == "" ? SCAFFOLD.cell_size.to_s : args.state.input_buffer))
+	ClickButton::cell_size.release if !Mouse.on?(args.state.click)	and ClickButton::cell_size.true?
 	if Keyboard.number?
 		args.state.input_buffer += Keyboard.number.to_s
 	elsif Keyboard.letter == :delete
 		args.state.input_buffer.chop!
 	elsif Keyboard.letter == :enter and args.state.input_buffer.to_i > 0
-		args.state.cell.click
+		ClickButton::cell_size.click
 	end
-	if args.state.cell.true?
+	if ClickButton::cell_size.true?
 		SCAFFOLD.cell_size = args.state.input_buffer.to_i
 		args.state.input_buffer = ""
 	end
 
 	# Highlight Mode
 	args.state.mode ||= 4
-	args.state.highlight ||= ClickButton.new(text: 'mode: 100')
-	args.state.highlight.put_right_of!(args.state.cell)
-	args.state.highlight.align_vertically_with!(args.state.cell)
-	if args.state.highlight.true?
+	ClickButton::mode_cycle.put_right_of!(ClickButton::cell_size)
+	ClickButton::mode_cycle.align_vertically_with!(ClickButton::cell_size)
+	if ClickButton::mode_cycle.true?
 		args.state.mode += 1
 		args.state.mode = 0 if args.state.mode > 7
-		args.state.highlight.set_text!('mode: %03b' % [args.state.mode])
+		ClickButton::mode_cycle.set_text!('mode: %03b' % [args.state.mode])
 	end
 	Level.every(Lattice)[0].highlight_mode = args.state.mode unless Level.every(Lattice).empty?
+
+	# Mode/Layer Shift
+	ClickButton::previous_mode.put_left_of! ClickButton::next_mode
+	ClickButton::previous_mode.align_vertically_with! ClickButton::next_mode
 
 	scaffold_mode args
 
@@ -82,6 +82,11 @@ def tick args
 			h: 12
 		}.merge(Color.red)
 	end
+
+
+
+	args.state.window ||= Window.new('An Old Pond - Matsuo Basho', ['Furu ike ya','kawazu tobikomu','mizu no oto'])
+	args.outputs.primitives << args.state.window.primitives
 
 
 end

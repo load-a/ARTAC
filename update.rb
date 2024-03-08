@@ -19,7 +19,7 @@ module Update
 	end
 
 	def objects args
-		Button.all.each { |button| button.resize_to_fit_text }
+		# Button.all.each { |button| button.resize_to_fit_text }
 
 	end
 
@@ -28,7 +28,7 @@ module Update
 
 		DebugTools.list([50, 700], args.state.texts, args)
 		DebugTools.quick_render_primitives(Level.all_primitives, args)
-		DebugTools.quick_render_primitives(Button.all, args)
+		DebugTools.quick_render_primitives(CLICK_BUTTON_LIST, args)
 
 	end
 
