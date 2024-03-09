@@ -9,7 +9,7 @@ module Update
 		Mouse.release_click_buttons
 
 		Keyboard.update args
-
+		Renderer.update args
 	end
 
 	def variables args
@@ -24,12 +24,8 @@ module Update
 	end
 
 	def outputs args
-		args.outputs.borders << SCAFFOLD.rect.merge(Color.dark_blue)
-
 		DebugTools.list([50, 700], args.state.texts, args)
-		DebugTools.quick_render_primitives(Level.all_primitives, args)
-		DebugTools.quick_render_primitives(CLICK_BUTTON_LIST, args)
-
+		# Renderer.render
 	end
 
 end

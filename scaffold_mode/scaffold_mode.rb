@@ -2,7 +2,7 @@ require 'app/scaffold_mode/scaffold.rb'
 require 'app/scaffold_mode/scaffold_interaction.rb'
 
 def scaffold_mode args
-	if Mouse.click? && !Mouse.on_button?
+	if Mouse.click? && !Mouse.on_button? && !Mouse.on_any_in?( Renderer.all.select {|object| object.kind_of? Window})
 		if Keyboard.letter_hold == :shift
 			# Do nothing
 		elsif Keyboard.letter_hold == :space
@@ -11,7 +11,7 @@ def scaffold_mode args
 			ScaffoldInteraction::reset_scaffold_to_mouse_location
 		end
 
-	elsif Mouse.held? && !Mouse.on_button?
+	elsif Mouse.held? && !Mouse.on_button? && !Mouse.on_any_in?( Renderer.all.select {|object| object.kind_of? Window})
 		if Keyboard.letter_hold == :space
 			SCAFFOLD.adjust_location_with_difference(Mouse.location)
 

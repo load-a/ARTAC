@@ -2,6 +2,7 @@ module WindowText
 	private 
 
 	TOP_PADDING = 20
+	BOTTOM_PADDING = 15
 	SIDE_PADDING = 35
 
 	TITLE_LINE_HEIGHT = 20
@@ -40,7 +41,7 @@ module WindowText
 	end
 
 	def body_hash
-		fix_text.map_with_index { |text, index|
+		fitted_text.map_with_index { |text, index|
 			{
 				x: horizontal_center,
 				y: title_hash[:y] - title_hash[:line_height] - (BODY_LINE_HEIGHT * (index+1)),
@@ -51,15 +52,22 @@ module WindowText
 		}
 	end
 
-	def body_height
-		fix_text.length * BODY_LINE_HEIGHT
+	def fitted_text
+		self.body = [body] unless body.kind_of? Array
+		body.map { |text_element|
+			wrap_text(text_element)
+		}.flatten
 	end
 
-	def fix_text
+	def body_height
+		fitted_text.length * BODY_LINE_HEIGHT
+	end
+
+	def wrap_text(text)
 		new_text = []
 		new_line = ""
 
-		body.split(' ').each { |word|
+		text.split(' ').each { |word|
 			if word.length + 1 + new_line.length > title_length_plus_padding/BODY_CHARACTER_WIDTH - BODY_CHARACTER_PADDING
 				new_text << new_line
 				new_line = ''

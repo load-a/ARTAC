@@ -1,4 +1,5 @@
 def tick args
+	initial args if Kernel::tick_count == 0
 	Update::variables args
 	Update::classes args
 	Update::objects args
@@ -9,12 +10,12 @@ def tick args
 		SCAFFOLD.formatted_info, 
 		Level.formatted_info, 
 		Button.info, 
-		args.state.window
+		Renderer.all.length
 	]
 
 	# Commit SCAFFOLD to new Lattice
 	if ClickButton::commit_lattice.true? and Level.every(Lattice).empty?
-		Lattice.new(SCAFFOLD.location, SCAFFOLD.size.map {|e| e/SCAFFOLD.cell_size}, SCAFFOLD.cell_size)
+		Renderer.add( Lattice.new(SCAFFOLD.location, SCAFFOLD.size.map {|e| e/SCAFFOLD.cell_size}, SCAFFOLD.cell_size) )
 	end
 
 	# Clear SCAFFOLD
@@ -22,6 +23,7 @@ def tick args
 	ClickButton::clear_lattice.align_vertically_with!(ClickButton::commit_lattice)
 	if ClickButton::clear_lattice.true?
 		SCAFFOLD.clear!
+		Renderer.remove( Level.every(Lattice)[0] )
 		Level.delete_every!(Lattice)
 	end
 
@@ -57,6 +59,15 @@ def tick args
 	ClickButton::previous_mode.put_left_of! ClickButton::next_mode
 	ClickButton::previous_mode.align_vertically_with! ClickButton::next_mode
 
+	# Drag Window
+	if Mouse.on? args.state.window and Mouse.click?
+		args.state.dif_x = Mouse.x - args.state.window.x
+		args.state.dif_y = Mouse.y - args.state.window.y
+	elsif Mouse.on? args.state.window and Mouse.hold?
+		args.state.window.move [Mouse.x-args.state.dif_x, Mouse.y-args.state.dif_y]
+	end
+
+
 	scaffold_mode args
 
 	if Mouse.on_button?
@@ -83,10 +94,10 @@ def tick args
 		}.merge(Color.red)
 	end
 
+	
 
-
-	args.state.window ||= Window.new('An Old Pond - Matsuo Basho', ['Furu ike ya','kawazu tobikomu','mizu no oto'])
-	args.outputs.primitives << args.state.window.primitives
-
+	
+	Renderer.remove args.state.window if args.state.window.any_true?
+	Renderer.render
 
 end

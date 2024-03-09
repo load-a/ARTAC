@@ -4,6 +4,9 @@
 require 'app/require_file_module.rb'
 RequireFile::require_all_ruby_files
 
+# Set all default values here.
+require 'app/initialize.rb'
+
 # All methods that require updates should go here.
 require 'app/update.rb'
 

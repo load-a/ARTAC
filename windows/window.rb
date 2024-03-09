@@ -6,6 +6,15 @@ class Window
 	include Geometry
 	include WindowText
 
+	@@all = []
+	class << self
+		
+		def all
+			@@all
+		end
+
+	end
+
 	private
 
 	def initialize(title = 'title', body = 'text')
@@ -17,6 +26,8 @@ class Window
 		set_location! [300, 100]
 		set_size! [title_length_plus_padding, title_height+body_height+button_section_height]
 
+		@@all << self
+
 
 		@exit = ClickButton.new(location: [x+5, apex[1]-30], text: "x", size: [25, 25])
 		@confirm = ClickButton.new(location: [x+width/8, y+20], text: "Confirm", size: [100, 50])
@@ -26,8 +37,30 @@ class Window
 	public
 	attr_accessor :title, :body
 
+	def move(new_location)
+		dif_x = new_location[0] - x
+		dif_y = new_location[1] - y
+
+		set_location!(new_location)
+
+		buttons.each { |button| 
+			button.set_location! [button.x + dif_x, button.y + dif_y]
+		}
+	end
+
+
 	def primitives
-		[rect.merge(Color.black), buttons, texts, background_hash].reverse
+		[rect.merge(Color.black),	divider, button_primitives, texts, background_hash].reverse
+	end
+
+	def divider
+		{
+			x: x,
+			y: apex[1]-TITLE_LINE_HEIGHT-TOP_PADDING-BOTTOM_PADDING,
+			x2: apex[0]-1,
+			y2: apex[1]-TITLE_LINE_HEIGHT-TOP_PADDING-BOTTOM_PADDING,
+			primitive_marker: :line
+		}
 	end
 
 	def background_hash
@@ -43,11 +76,20 @@ class Window
 		]
 	end
 
+	def button_primitives
+		buttons.map{|button| button.primitives}
+	end
+
 	def buttons
 		[
 			@exit,
 			@confirm,
 			@cancel
-		].map{|button| button.primitives}
+		]
 	end
+
+	def any_true?
+		buttons.map {|button| button.true? }.include? true
+	end
+
 end
