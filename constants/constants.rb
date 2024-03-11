@@ -10,6 +10,8 @@ DEFAULT_CELL_SIZE = 16
 GRID_LIMIT_X = SCREEN_SIZE_X / DEFAULT_CELL_SIZE
 GRID_LIMIT_Y = SCREEN_SIZE_Y / DEFAULT_CELL_SIZE
 
+ASSUMED_FRAMES_PER_SECOND = 60
+
 # @note 
 # 	- SPRITESHEET - See 'app/things/sprite_sheet.rb'
 # 	- SELECTOR - See 'app/high_level_classes/selector.rb'

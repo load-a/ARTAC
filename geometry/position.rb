@@ -1,16 +1,15 @@
-require 'app/geometry/dimensions.rb'
 require 'app/geometry/perimeter.rb'
 
 # Methods for setting an object's location in reference to another object.
 
 module Position
 
-	def left_of(object, padding: 10)
-		object.x - self.width - padding
+	def left_of(object, spacing: 10)
+		object.x - self.width - spacing
 	end
 
-	def put_left_of!(this, padding: 10)
-		set_x!( left_of(this, padding: padding) )
+	def put_left_of!(this, spacing: 10)
+		set_x!( left_of(this, spacing: spacing) )
 	end
 
 	def left_of?(this)
@@ -18,12 +17,12 @@ module Position
 	end
 
 
-	def right_of(object, padding: 10)
-		object.x + object.width + padding
+	def right_of(object, spacing: 10)
+		object.x + object.width + spacing
 	end
 
-	def put_right_of!(this, padding: 10)
-		set_x!(right_of(this, padding: padding))
+	def put_right_of!(this, spacing: 10)
+		set_x!(right_of(this, spacing: spacing))
 	end
 
 	def right_of?(this)
@@ -31,12 +30,12 @@ module Position
 	end
 
 
-	def above(object, padding: 10)
-		object.y + object.height + padding
+	def above(object, spacing: 10)
+		object.y + object.height + spacing
 	end
 
-	def put_above!(this, padding: 10)
-		set_y!(above(this, padding: padding))
+	def put_above!(this, spacing: 10)
+		set_y!(above(this, spacing: spacing))
 	end
 
 	def above?(this)
@@ -44,12 +43,12 @@ module Position
 	end
 
 
-	def below(object, padding: 10)
-		object.y - self.height - padding
+	def below(object, spacing: 10)
+		object.y - self.height - spacing
 	end
 
-	def put_below!(this, padding: 10)
-		set_y!(below(this, padding: padding))
+	def put_below!(this, spacing: 10)
+		set_y!(below(this, spacing: spacing))
 	end
 
 	def below?(this)

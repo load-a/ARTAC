@@ -1,7 +1,7 @@
 module WindowText
 	private 
 
-	TOP_PADDING = 20
+	TOP_PADDING = 15
 	BOTTOM_PADDING = 15
 	SIDE_PADDING = 35
 
@@ -20,6 +20,13 @@ module WindowText
 	LEFT_ALIGNED = 2
 
 	public
+
+	def texts
+		[
+			title_hash,
+			body_hash
+		]
+	end
 
 	def title_hash
 		{

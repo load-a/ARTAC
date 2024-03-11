@@ -5,99 +5,56 @@ def tick args
 	Update::objects args
 	Update::outputs args
 
-	args.state.texts = [ 
-		Mouse.formatted_info, 
-		SCAFFOLD.formatted_info, 
-		Level.formatted_info, 
-		Button.info, 
-		Renderer.all.length
+	args.state.timer ||= CooldownTimer.new('Cooldown Timer', TimeConverter::seconds_to_frames(3))
+	args.state.timer_on ||= 1
+
+	args.state.timer.flip! if Keyboard.letter == :space
+	args.state.timer.count(auto_restart: true) if args.state.timer.on?
+
+	args.state.frame_input_buffer ||= '0'
+	args.state.frame_input_buffer = '0' unless args.state.frame_input_buffer.to_i > 0
+
+	list = [
+		args.state.frame_input_buffer,
+		args.state.timer.formatted_time,
+		"on? " + args.state.timer.status[:on].to_s,
+		"State: " + args.state.timer.status[:state].to_s,
 	]
 
-	# Commit SCAFFOLD to new Lattice
-	if ClickButton::commit_lattice.true? and Level.every(Lattice).empty?
-		Renderer.add( Lattice.new(SCAFFOLD.location, SCAFFOLD.size.map {|e| e/SCAFFOLD.cell_size}, SCAFFOLD.cell_size) )
+	case Keyboard.letter
+	when :enter
+		args.state.timer.set!(args.state.frame_input_buffer.to_i)
+		args.state.frame_input_buffer = '0'
+	when :delete
+		args.state.frame_input_buffer.chop!
+	when :c
+		args.state.frame_input_buffer = '0'
+	when :space
+		args.state.timer_on *= -1
+	when :r
+		args.state.timer.reset!
 	end
 
-	# Clear SCAFFOLD
-	ClickButton::clear_lattice.put_right_of!(ClickButton::commit_lattice)
-	ClickButton::clear_lattice.align_vertically_with!(ClickButton::commit_lattice)
-	if ClickButton::clear_lattice.true?
-		SCAFFOLD.clear!
-		Renderer.remove( Level.every(Lattice)[0] )
-		Level.delete_every!(Lattice)
-	end
-
-	# Change Cell Size
-	ClickButton::cell_size.put_right_of!(ClickButton::clear_lattice)
-	ClickButton::cell_size.align_vertically_with!(ClickButton::commit_lattice)
-	ClickButton::cell_size.set_text!("cell size: " + (args.state.input_buffer == "" ? SCAFFOLD.cell_size.to_s : args.state.input_buffer))
-	ClickButton::cell_size.release if !Mouse.on?(args.state.click)	and ClickButton::cell_size.true?
 	if Keyboard.number?
-		args.state.input_buffer += Keyboard.number.to_s
-	elsif Keyboard.letter == :delete
-		args.state.input_buffer.chop!
-	elsif Keyboard.letter == :enter and args.state.input_buffer.to_i > 0
-		ClickButton::cell_size.click
-	end
-	if ClickButton::cell_size.true?
-		SCAFFOLD.cell_size = args.state.input_buffer.to_i
-		args.state.input_buffer = ""
+		args.state.frame_input_buffer = '' if args.state.frame_input_buffer == '0'
+		args.state.frame_input_buffer << Keyboard.number.to_s
 	end
 
-	# Highlight Mode
-	args.state.mode ||= 4
-	ClickButton::mode_cycle.put_right_of!(ClickButton::cell_size)
-	ClickButton::mode_cycle.align_vertically_with!(ClickButton::cell_size)
-	if ClickButton::mode_cycle.true?
-		args.state.mode += 1
-		args.state.mode = 0 if args.state.mode > 7
-		ClickButton::mode_cycle.set_text!('mode: %03b' % [args.state.mode])
-	end
-	Level.every(Lattice)[0].highlight_mode = args.state.mode unless Level.every(Lattice).empty?
+	DebugTools::list([30, 700], list, args)
+	# scaffold_mode args
 
-	# Mode/Layer Shift
-	ClickButton::previous_mode.put_left_of! ClickButton::next_mode
-	ClickButton::previous_mode.align_vertically_with! ClickButton::next_mode
+	# if Mouse.on_button?
+	# 	SELECTOR.remember! Mouse.button if SELECTOR.blank?
+	# end
 
-	# Drag Window
-	if Mouse.on? args.state.window and Mouse.click?
-		args.state.dif_x = Mouse.x - args.state.window.x
-		args.state.dif_y = Mouse.y - args.state.window.y
-	elsif Mouse.on? args.state.window and Mouse.hold?
-		args.state.window.move [Mouse.x-args.state.dif_x, Mouse.y-args.state.dif_y]
-	end
+	# if (SELECTOR.memory.kind_of? Button and !Mouse.on_button?) or (SELECTOR.memory != Mouse.button)
+	# 	SELECTOR.memory.unhighlight
+	# 	SELECTOR.forget!
+	# end
 
-
-	scaffold_mode args
-
-	if Mouse.on_button?
-		SELECTOR.remember! Mouse.button if SELECTOR.blank?
-	end
-
-	if Mouse.on_lattice? and (args.state.mode > 0) and !(Mouse.x > 1050 and Mouse.y > 510)
-		$gtk.hide_cursor
-	else
-		$gtk.show_cursor
-	end
-
-	if (SELECTOR.memory.kind_of? Button and !Mouse.on_button?) or (SELECTOR.memory != Mouse.button)
-		SELECTOR.memory.unhighlight
-		SELECTOR.forget!
-	end
-
-	if Keyboard.letter_hold == :shift
-		args.outputs.borders << {
-			x: SCAFFOLD.anchor_point[0] - 6, 
-			y: SCAFFOLD.anchor_point[1] - 6, 
-			w: 12, 
-			h: 12
-		}.merge(Color.red)
-	end
 
 	
-
-	
-	Renderer.remove args.state.window if args.state.window.any_true?
-	Renderer.render
+	# Renderer.remove args.state.window if args.state.window.any_true?
+	# Renderer.render
 
 end

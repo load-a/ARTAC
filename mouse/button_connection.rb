@@ -38,10 +38,4 @@ module ButtonConnection
 		end
 	end
 
-
-	# not implemented yet
-	# def highlight_button
-	# 	current_button.highlight
-	# end
-
 end

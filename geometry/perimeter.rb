@@ -1,4 +1,8 @@
+require 'app/geometry/dimensions.rb'
+
 module Perimeter
+	include Dimensions
+
 	public
 	# The point opposite the object's base.
 	# @return [Array<Integer>]

@@ -36,7 +36,6 @@ class Mouse < ArgsObject
 		def up?
 			@args.inputs.mouse.up ? true : false
 		end
-		alias release? up?
 
 		# Checks if the Mouse is on anything in the given list.
 		# 	Reads from Level#all by default.
@@ -79,16 +78,16 @@ class Mouse < ArgsObject
 				sees: sees_in_list,
 				click: click?,
 				down: hold?,
-				release: release?
+				up: up?
 			}
 		end
 
 		def binary_signals
-			c = click? ? 1 : 0
-			h = hold? ? 1 : 0
-			r = release? ? 1 : 0
+			click = click? ? 1 : 0
+			hold = hold? ? 1 : 0
+			up = up? ? 1 : 0
 
-			'%d%d%d' % [c,h,r]
+			'%d%d%d' % [click, hold, up]
 		end
 
 

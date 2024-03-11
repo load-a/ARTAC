@@ -1,10 +1,8 @@
-require 'app/geometry/dimensions.rb'
 require 'app/geometry/position.rb'
 require 'app/geometry/perimeter.rb'
 
 # A module for handling all geometric attributes the object may have.
 module Geometry
-	include Dimensions
 	include Position
 	include Perimeter 
 
