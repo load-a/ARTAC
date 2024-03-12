@@ -8,7 +8,8 @@ def scaffold_mode args
 		SCAFFOLD.formatted_info, 
 		Level.formatted_info, 
 		Button.info, 
-		Renderer.all.length
+		Renderer.all.length,
+		Keyboard.inputs,
 	]
 
 	# Commit SCAFFOLD to new Lattice
@@ -32,7 +33,7 @@ def scaffold_mode args
 	ClickButton::cell_size.release if !Mouse.on?(args.state.click)	and ClickButton::cell_size.true?
 	if Keyboard.number?
 		args.state.input_buffer += Keyboard.number.to_s
-	elsif Keyboard.letter == :delete
+	elsif Keyboard.letter == :backspace
 		args.state.input_buffer.chop!
 	elsif Keyboard.letter == :enter and args.state.input_buffer.to_i > 0
 		ClickButton::cell_size.click
@@ -57,7 +58,7 @@ def scaffold_mode args
 	ClickButton::previous_mode.put_left_of! ClickButton::next_mode
 	ClickButton::previous_mode.align_vertically_with! ClickButton::next_mode
 
-	# Drag Window
+	# Size Scaffold
 	if Mouse.on? args.state.window and Mouse.click?
 		args.state.dif_x = Mouse.x - args.state.window.x
 		args.state.dif_y = Mouse.y - args.state.window.y
@@ -65,6 +66,7 @@ def scaffold_mode args
 		args.state.window.move [Mouse.x-args.state.dif_x, Mouse.y-args.state.dif_y]
 	end
 
+	# 
 	if Mouse.click? && !Mouse.on_button? && !Mouse.on_any_in?( Renderer.all.select {|object| object.kind_of? Window})
 		if Keyboard.letter_hold == :shift
 			# Do nothing
@@ -100,6 +102,7 @@ def scaffold_mode args
 	
 	end
 
+	# Shift scaffold location
 	if Keyboard.letter_hold == :shift
 		args.outputs.borders << {
 			x: SCAFFOLD.anchor_point[0] - 6, 
@@ -109,6 +112,7 @@ def scaffold_mode args
 		}.merge(Color.red)
 	end
 
+	# Hide mouse if on a highlighted lattice
 	if Mouse.on_lattice? and (args.state.mode > 0) and !(Mouse.x > 1050 and Mouse.y > 510)
 		$gtk.hide_cursor
 	else

@@ -26,6 +26,16 @@ module Update
 	def outputs args
 		DebugTools.list([50, 700], args.state.texts, args)
 		# Renderer.render
+
+		# Mouse-button highlighting
+		if Mouse.on_button?
+			SELECTOR.remember! Mouse.button if SELECTOR.blank?
+		end
+		if (SELECTOR.memory.kind_of? Button and !Mouse.on_button?) or (SELECTOR.memory != Mouse.button)
+			SELECTOR.memory.unhighlight
+			SELECTOR.forget!
+		end
+
 	end
 
 end
