@@ -17,7 +17,7 @@ module KeyboardNumbers
 	end
 
 	def number?
-		numbers.any? down_or_held_inputs
+		!down_or_held_inputs.select { |number, numeral| numbers.include? number }.empty?
 	end
 	alias numeral? number?
 

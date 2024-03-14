@@ -14,7 +14,6 @@ module Update
 
 	def variables args
 		args.state.texts ||= []
-		args.state.input_buffer ||= String.new
 
 	end
 
@@ -25,7 +24,6 @@ module Update
 
 	def outputs args
 		DebugTools.list([50, 700], args.state.texts, args)
-		# Renderer.render
 
 		# Mouse-button highlighting
 		if Mouse.on_button?

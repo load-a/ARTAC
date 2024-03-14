@@ -1,4 +1,4 @@
-require 'app/_meta_files/case_keys.rb'
+require 'app/case_keys.rb'
 
 require 'app/keyboard/keyboard_letters.rb'
 require 'app/keyboard/keyboard_numbers.rb'

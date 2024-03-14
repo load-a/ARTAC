@@ -12,6 +12,11 @@ GRID_LIMIT_Y = SCREEN_SIZE_Y / DEFAULT_CELL_SIZE
 
 ASSUMED_FRAMES_PER_SECOND = 60
 
+RIGHT_ALIGNED_ENUM = 0
+CENTERED_ENUM = 1
+LEFT_ALIGNED_ENUM = 2
+
+
 # @note 
 # 	- SPRITESHEET - See 'app/things/sprite_sheet.rb'
 # 	- SELECTOR - See 'app/high_level_classes/selector.rb'

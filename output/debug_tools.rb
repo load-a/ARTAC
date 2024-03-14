@@ -36,7 +36,7 @@ module DebugTools
 
 	# This method takes an array of objects and renders each.
 	# All objects in the list must have a "primitives" attribute, which contains its rendering hash.
-	def self.quick_render_primitives(list, args)
+	def self.quick_render_primitives_list(list, args)
 		args.outputs.primitives << list.map { |e|
 			e.primitives 
 		}

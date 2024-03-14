@@ -1,12 +1,10 @@
-require 'app/buttons/click_button.rb'
-require 'app/geometry/geometry.rb'
-require 'app/windows/window_text.rb'
-require 'app/windows/window_buttons.rb'
+require 'app/windows/window_title.rb'
+require 'app/windows/window_body.rb'
 
 class Window
 	include Geometry
-	include WindowText
-	include WindowButtons
+	include WindowTitle
+	include WindowBody
 
 	@@all = []
 	class << self
@@ -18,57 +16,33 @@ class Window
 	end
 
 	private
-	attr_accessor :buttons 
 
-	def initialize(title = 'title', body = 'text', number_of_buttons = 1)
-		self.title = title
-		self.body = body
-
-		button_section_height = 115
-
-		set_location! [300, 100]
-
-		puts buttons
-
-		if number_of_buttons > 0
-			set_size! [title_length_plus_padding, title_height+body_height+button_section_height] 
-		else
-			set_size! [title_length_plus_padding, title_height+body_height+BOTTOM_PADDING] 
-		end
-
-		initialize_buttons(number_of_buttons)
-
-
-		@@all << self
-
+	def initialize( title, section_one = nil, section_two = nil )
+		set_dimensions!([300, 200], [0, 0])
+		initialize_title(title)
+		initialize_sections(section_one, section_two)
 	end
 
 	public
-	attr_accessor :title, :body
 
 	def move(new_location)
 		dif_x = new_location[0] - x
 		dif_y = new_location[1] - y
 
 		set_location!(new_location)
+		update_both_object_coordinates
 
-		buttons.each_value { |button| 
-			button.set_location! [button.x + dif_x, button.y + dif_y]
-		}
+		# buttons.each_value { |button| 
+		# 	button.set_location! [button.x + dif_x, button.y + dif_y]
+		# }
 	end
 
 	def primitives
-		[rect.merge(Color.black),	divider, button_primitives, texts, background_hash].reverse
-	end
-
-	def divider
-		{
-			x: x,
-			y: apex[1]-TITLE_LINE_HEIGHT-TOP_PADDING-BOTTOM_PADDING,
-			x2: apex[0]-1,
-			y2: apex[1]-TITLE_LINE_HEIGHT-TOP_PADDING-BOTTOM_PADDING,
-			primitive_marker: :line
-		}
+		[
+			rect.merge(Color::green),
+			title_section,
+			body_sections,
+		].reverse
 	end
 
 	def background_hash

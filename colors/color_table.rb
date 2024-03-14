@@ -190,6 +190,7 @@ class ColorTable
 		def all
 			[light + dark + monochrome, border].flatten
 		end
+		alias primitives all
 
 	end
 

@@ -2,6 +2,7 @@
 
 # All basic files are 'required' here, ignoring the ones in the 'app' directory itself.
 require 'app/require_file_module.rb'
+require 'app/case_keys.rb'
 RequireFile::require_all_ruby_files
 
 # Set all default values here.

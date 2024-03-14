@@ -7,9 +7,17 @@ module Perimeter
 	# The point opposite the object's base.
 	# @return [Array<Integer>]
 	def apex
-		[x+width, y+height]
+		[apex_x, apex_y]
 	end
 	alias summit apex
+
+	def apex_x
+		x+width
+	end
+
+	def apex_y
+		y+height
+	end
 
 	# @return [Integer]
 	def bottom_side
