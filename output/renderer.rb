@@ -4,13 +4,16 @@ require 'app/things/lattices/lattice.rb'
 require 'app/things/tiles/actor.rb'
 require 'app/things/tiles/tile.rb'
 
+# This class holds all the objects that are to be rendered.
+
 class Renderer < ArgsObject
+	
 	@@all = []
 
 	@@layer_order = [:background, :midground, :foreground]
 	@@element_order = [:background_element, :foreground_element, :border]
 	# Symbols represent classes that have not been implemented yet
-	@@class_order = [:Tooltip, Window, :Menu, Lattice, :TextBox, Actor, Tile, :Background].reverse
+	# @@class_order = [:Tooltip, Window, :Menu, Lattice, TextBlock, Actor, Tile, :Background].reverse
 
 	class << self
 
@@ -26,24 +29,31 @@ class Renderer < ArgsObject
 		def remove(object)
 			@@all.delete(object)
 		end
+		alias delete remove
 
-		def sort!
-			# Sort by Layer, class then element
+
+		def render
+			@args.outputs.primitives << parse_classes
 		end
 
-		def all_primitives
-			sort!
-			all.map { |object| 
-				if object.respond_to?('primitives')
-					object.primitives 
-				else
+		def parse_classes(list = dig_up_arrays)
+			list.map { |object|
+				if object.respond_to? 'primitives'
+					object.primitives
+				elsif object.respond_to? 'rect'
 					object.rect
+				elsif object.respond_to? 'visible'
+					parse_classes(object.visible)
+				elsif object.kind_of? Hash
+					object
+				else
+					puts "Not processed: " + object
 				end
 			}
 		end
 
-		def render
-			@args.outputs.primitives << all_primitives
+		def dig_up_arrays
+			@@all.flatten
 		end
 
 	end

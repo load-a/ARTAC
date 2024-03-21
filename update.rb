@@ -3,10 +3,10 @@ module Update
 
 	def classes args
 		Mouse.update args
-		Mouse.highlight_lattice
-		Mouse.highlight_button
-		Mouse.interact_with_button		
-		Mouse.release_click_buttons
+		# Mouse.highlight_lattice
+		# Mouse.highlight_button
+		# Mouse.interact_with_button		
+		# Mouse.release_click_buttons
 
 		Keyboard.update args
 		Renderer.update args

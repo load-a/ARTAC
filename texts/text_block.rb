@@ -15,14 +15,17 @@ class TextBlock
 		@raw_text = text
 		@column_limit = number_of_columns
 
+		set_location! [0, 0]
 		set_size! [@column_limit*CHARACTER_WIDTH, text_block_height]
 	end
 
+
+	public
 	attr_accessor :y
 
 	def set_location! new_location
 		self.x = new_location[0]
-		self.y = new_location[1] + text_block_height
+		self.y = new_location[1] #+ text_block_height
 	end
 
 	def text_block_height
@@ -33,7 +36,7 @@ class TextBlock
 		text_array.map_with_index { |text, index|
 			{
 				x: horizontal_center,
-				y: y - LINE_HEIGHT*index,
+				y: apex_y - LINE_HEIGHT*index,
 				text: text,
 				alignment_enum: CENTERED_ENUM,
 				vertical_alignment_enum: 2,

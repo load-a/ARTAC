@@ -41,7 +41,7 @@ class Mouse < ArgsObject
 		# 	Reads from Level#all by default.
 		# @param list [Array<Thing>]
 		# @return [Boolean]
-		def on_any_in?(list = Level.all)
+		def on_any_in?(list)
 			list.map { |thing| on?(thing) }.include? true
 		end
 
@@ -49,12 +49,12 @@ class Mouse < ArgsObject
 		# 	Reads from Level#all by default.
 		# @param list [Array<Thing>]
 		# @return [Array<Thing>]
-		def sees_in_list(list = Level.all)
+		def sees_in_list(list)
 			list.map { |thing| thing if on?(thing) }.flatten.compact
 		end
 		alias sees_in sees_in_list
 
-		def sees(list = Level.all)
+		def sees(list)
 			sees_in_list(list)[0]
 		end
 
@@ -94,7 +94,7 @@ class Mouse < ArgsObject
 		def formatted_info
 			thing_ids = sees_in_list.map{|object| object.id}
 			button_ids = sees_in_list(Button.all).map{|object| object.id}
-			'L: %s, S(L): %s, S(B): %s, CHU: %s' % [location, thing_ids, button_ids, binary_signals]
+			'L: %s, CHU: %s' % [location, binary_signals]
 		end
 
 	end

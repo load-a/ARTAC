@@ -1,7 +1,7 @@
 module WindowConstants
 
 	private
-	TITLE_LINE_HEIGHT = 20
+	TITLE_FONT_HEIGHT = 20
 	TITLE_CHARACTER_WIDTH = 13
 
 	TITLE_SIZE_ENUM = 3

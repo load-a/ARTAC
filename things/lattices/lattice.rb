@@ -155,7 +155,6 @@ class Lattice < Thing
 
 	# @return [Hash]
 	def primitives
-		super[:primitive_marker] = :border
 		[super, (highlights unless highlights.empty?)].reverse
 	end
 

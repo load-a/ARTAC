@@ -55,7 +55,7 @@ class Thing
 	# @note All objects that will actually get rendered have their own #primitives implementations. 
 	# 	This one here is just a default version.
 	def primitives
-		{ :primitive_marker => :border }.merge(dimensions)
+		rect
 	end
 
 end

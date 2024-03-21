@@ -16,10 +16,9 @@ module Location
 	end
 	alias base location
 
-	# @note Only meant to be used with object initialization.
 	# @return [Void]
-	def set_location!(location)
-		self.x, self.y = location
+	def set_location!(new_location)
+		self.x, self.y = new_location
 	end
 
 	def set_x!(new_x)
@@ -29,5 +28,11 @@ module Location
 	def set_y!(new_y)
 		self.y = new_y
 	end
+
+	def move_location!(location_difference)
+		self.x += location_difference[0]
+		self.y += location_difference[1]
+	end
+	alias move! move_location!
 
 end

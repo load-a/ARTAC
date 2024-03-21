@@ -28,6 +28,10 @@ def SPRITESHEET.calculate_cell_location(location)
 	[cell_x, (cell_y-15).abs]
 end
 
+def SPRITESHEET.reset_base
+	self.highlighter.reset_base(location)
+end
+
 def SPRITESHEET.primitives
 	[
 		super,
@@ -56,37 +60,35 @@ def SPRITESHEET.primitives
 		},
 		{
 			x: x,
-			y: y - 5,
+			y: y - 35,
 			text: get_sprite_name,
 			primitive_marker: :label,
 		},
 		{
-			x: x,
-			y: y - 55,
+			x: apex_x + 10,
+			y: apex_y - 130,
 			text: "Cell: %s" % target_cell.to_s,
 			primitive_marker: :label,
 		},
 		{
-			x: x,
-			y: y - 30,
-			text: "Lit: %s" % target_location.to_s,
+			x: apex_x + 10,
+			y: apex_y - 150,
+			text: "Lit: %s" % target_location.to_s,#target_location.to_s,
 			primitive_marker: :label,
 		},
 		{
-			x: x + 192,
-			y: y - 65,
-			w: 32,
-			h: 32,
+			x: apex_x + 10,
+			y: apex_y - 120,
+			w: 128,
+			h: 128,
 			path: SPRITE_PATH,
 			tile_x: target_location[0] - x,
 			tile_y: ((target_location[1] - y) - 240).abs, # Sprite Y Axis is backwards in Dragon Ruby
 			tile_w: DEFAULT_CELL_SIZE,
 			tile_h: DEFAULT_CELL_SIZE,
 			primitive_marker: :sprite,
-		}.merge(Color.dark_blue)
+		}.merge(Color.dark_blue),
 	].flatten
 end
-
-Level.delete!(SPRITESHEET)
 
 

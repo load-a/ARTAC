@@ -15,7 +15,7 @@ class Highlighter
 		self.mode = 0b100
 
 		self.size = master.size
-		self.base = master.base
+		self.base = master.location
 		self.apex = master.apex
 		self.unit_length = master.unit_length
 		self.color = Color.blue
@@ -25,6 +25,10 @@ class Highlighter
 	public
 	attr_reader :size, :base, :apex, :unit_length
 	attr_accessor :mode, :color
+
+	def reset_base(new_base)
+		self.base = new_base
+	end
 
 	# A box outline.
 	# @return [Hash]
@@ -67,7 +71,7 @@ class Highlighter
 		[
 			{
 				x: base[0],
-				x2: apex[0] - 1,
+				x2: apex_x - 1,
 				y: location[1] + unit_length / 2,
 				y2: location[1] + unit_length / 2,
 				primitive_marker: :line
