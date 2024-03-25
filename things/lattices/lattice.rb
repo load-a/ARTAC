@@ -155,6 +155,7 @@ class Lattice < Thing
 
 	# @return [Hash]
 	def primitives
+		highlighter.reset_base(self.location) if highlighter.base != self.location
 		[super, (highlights unless highlights.empty?)].reverse
 	end
 

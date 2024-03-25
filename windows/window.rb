@@ -6,7 +6,6 @@ class Window
 	include Geometry
 	include WindowTitle
 	include WindowBody
-	include WindowButtons
 
 	@@all = []
 	@@id_counter = 0
@@ -22,13 +21,15 @@ class Window
 	attr_writer :id
 	attr_accessor :section_list
 
-	def initialize( location, title, content_list, number_of_buttons = 0 )
+	def initialize( location, title, content_list)
+
+		location[1] -= BOTTOM_PADDING # This will be added back in the render
 		set_dimensions!(location, [0, 0])
+
 		self.section_list = Array.new
 
 		initialize_title_section(title)
 		initialize_content_sections(content_list)
-		# initialize_buttons(number_of_buttons)
 
 		self.id = "WIN" + @@id_counter.to_s
 		@@id_counter += 1
@@ -52,29 +53,30 @@ class Window
 	attr_reader :id
 
 	def move(new_location)
-		dif_x = new_location[0] - x
-		dif_y = new_location[1] - y
+		dif_x = new_location[0] - self.x
+		dif_y = new_location[1] - self.y
 
 		set_location!(new_location)
-		update_both_section_coordinates
-
-		buttons.each_value { |button| 
-			button.set_location! [button.x + dif_x, button.y + dif_y]
-		}
+		move_contents [dif_x, dif_y]
 	end
 
 	def primitives
 		[
 			rect,
-			# button_primitives,
 			title_section,
 			content_section,
 			background_hash,
-			section_list.map {|d| 
-				d[:primitive_marker] = :border
-				d.merge(Color.green)
-			}
 		].reverse
+	end
+
+	def rect
+		{
+			x: x,
+			y: y-BOTTOM_PADDING,
+			w: width,
+			h: height+BOTTOM_PADDING,
+			primitive_marker: :border
+		}
 	end
 
 	def background_hash

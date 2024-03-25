@@ -2,26 +2,26 @@ require 'app/windows/window_constants.rb'
 
 class Content
 
-	attr_accessor :content, :id
+	attr_accessor :content_object, :id
 	def initialize(content_object, id)
-		self.content = content_object
+		self.content_object = content_object
 		self.id = id
 	end
 
 	def set_location!(new_location)
-		content.set_location! new_location
+		content_object.set_location! new_location
 	end
 
 	def move_location!(new_relative_location)
-		content.move! new_relative_location
+		content_object.move! new_relative_location
 	end
 
 	def boundaries
-		content.rect
+		content_object.rect
 	end
 
 	def primitives
-		content.primitives
+		content_object.primitives
 	end
 
 	def generate_list_hash(title)
@@ -41,37 +41,44 @@ module WindowBody
 	def initialize_content_sections(content_objects)
 		content_objects = [content_objects] unless content_objects.kind_of? Array
 
-		self.all_content_objects = content_objects
+		self.all_content_objects = []
 
-		all_content_objects.each_with_index { |object, index|
+		content_objects.each_with_index { |object, index|
 			content = Content.new(object, index)
 
 			resize_to_fit_content(content) 
 			relocate_content(content)
 
 			section_list << content.generate_list_hash(title)
+			self.all_content_objects << object
 		}
 
 	end
 
 	def resize_to_fit_content(content)
-		self.width = content.boundaries[:w] + SIDE_PADDING*2 if content.boundaries[:w] > available_width
-		if content.boundaries[:h] > available_height
-			self.height += content.boundaries[:h] + TOP_PADDING 
-			# I need to figure out a way to push everything else up if a new item is added to the bottom of the window
-			# Maybe a #raise_everything_by(number) in the Window class
-			# Or change the window's anchor point to the top left?
-		end
+		resize_width(content)
+		resize_height(content)
 	end
+
+	def resize_width(content)
+		self.width = content.boundaries[:w] + SIDE_PADDING*2 if content.boundaries[:w] > available_width
+	end
+
+	def resize_height(content)
+		content_height = content.boundaries[:h]+TOP_PADDING
+
+		all_content_objects.each { |item|
+			item.move_location! [0, content_height]
+		}
+		
+		self.height += content_height
+	end
+
 
 	def relocate_content(content)
 		new_x = self.x + SIDE_PADDING
 		new_y = section_list.last[:y]# - TOP_PADDING - content.boundaries[:h]
-puts section_list.last
 		content.set_location! [new_x, new_y]
-		puts content.generate_list_hash(title)
-
-
 	end
 
 	def move_contents(new_relative_location)

@@ -10,9 +10,9 @@ def tick args
 		args.state.scene.make_everything_visible
 	end
 
-
-
-
+	# I can't access a window directly because of the Renderer.
+	# Investigate this.
+	puts args.state.scene
 
 	texts = [
 		Mouse.location,
