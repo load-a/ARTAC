@@ -13,7 +13,8 @@ module Update
 	end
 
 	def variables args
-		args.state.texts ||= []
+		args.state.texts ||= [
+		]
 
 	end
 
@@ -26,13 +27,13 @@ module Update
 		DebugTools.list([50, 700], args.state.texts, args)
 
 		# Mouse-button highlighting
-		if Mouse.on_button?
-			SELECTOR.remember! Mouse.button if SELECTOR.blank?
-		end
-		if (SELECTOR.memory.kind_of? Button and !Mouse.on_button?) or (SELECTOR.memory != Mouse.button)
-			SELECTOR.memory.unhighlight
-			SELECTOR.forget!
-		end
+		# if Mouse.on_button?
+		# 	SELECTOR.remember! Mouse.button if SELECTOR.blank?
+		# end
+		# if (SELECTOR.memory.kind_of? Button and !Mouse.on_button?) or (SELECTOR.memory != Mouse.button)
+		# 	SELECTOR.memory.unhighlight
+		# 	SELECTOR.forget!
+		# end
 
 	end
 

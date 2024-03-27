@@ -18,4 +18,12 @@ module Geometry
 		primary_object.right > secondary_object.left
 	end
 
+	def self.coordinate_difference(first_coordinates, second_coordinates)
+		[ first_coordinates[0] - second_coordinates[0] , first_coordinates[1] - second_coordinates[1] ]
+	end
+
+	def self.coordinate_sum(first_coordinates, second_coordinates)
+		[ first_coordinates[0] + second_coordinates[0] , first_coordinates[1] + second_coordinates[1] ]
+	end
+
 end

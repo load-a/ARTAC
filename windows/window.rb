@@ -21,7 +21,7 @@ class Window
 	attr_writer :id
 	attr_accessor :section_list
 
-	def initialize( location, title, content_list)
+	def initialize(location, title, content_list)
 
 		location[1] -= BOTTOM_PADDING # This will be added back in the render
 		set_dimensions!(location, [0, 0])
@@ -53,20 +53,34 @@ class Window
 	attr_reader :id
 
 	def move(new_location)
-		dif_x = new_location[0] - self.x
-		dif_y = new_location[1] - self.y
+		offset_point = Geometry::coordinate_difference(new_location, self.location)
 
 		set_location!(new_location)
-		move_contents [dif_x, dif_y]
+		move_contents offset_point
+	end
+
+	def move_relative(offset)
+		new_location = Geometry::coordinate_sum(self.location, offset)
+		move(new_location)
 	end
 
 	def primitives
 		[
 			rect,
+			ClickButton.new(location: [ exit_button_rect[:x] ,exit_button_rect[:y] ], text: "x", size: [25, 25]).primitives,
 			title_section,
 			content_section,
 			background_hash,
 		].reverse
+	end
+
+	def exit_button_rect
+		{
+			x: self.x+5,
+			y: self.apex[1]-30,
+			w: 25,
+			h: 25,
+		}
 	end
 
 	def rect

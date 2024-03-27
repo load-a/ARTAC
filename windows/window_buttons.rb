@@ -8,7 +8,7 @@ module WindowButtons
 	attr_writer :buttons
 	def button_locations
 		{
-			:exit_location => [ x+5, apex[1]-30 ],
+			:exit_location => [ self.x+5, self.apex[1]-30 ],
 			:right_location => [ x+SIDE_PADDING, y+BOTTOM_PADDING ],
 			:left_location => [ apex_x - SIDE_PADDING - DEFAULT_BUTTON_WIDTH, y+BOTTOM_PADDING ],
 			:center_location => [ horizontal_center-DEFAULT_BUTTON_WIDTH/2, y+BOTTOM_PADDING ],
@@ -57,7 +57,7 @@ module WindowButtons
 	end
 
 	def assign_buttons(number_of_buttons)
-		available_height = self.height - title_line_height - body_height
+		available_height = self.height - title_line_height - section_height
 		available_width = self.width - SIDE_PADDING*2
 
 		section_height = TOP_PADDING+DEFAULT_BUTTON_HEIGHT+BOTTOM_PADDING

@@ -12,13 +12,27 @@ def tick args
 
 	# I can't access a window directly because of the Renderer.
 	# Investigate this.
-	puts args.state.scene
 
 	texts = [
 		Mouse.location,
-		Mouse.on?(SPRITESHEET),
-		SPRITESHEET.target_cell
+		SELECTOR.formatted_info,
+		SPRITESHEET.target_cell,
+		Mouse.sees_in(args.state.scene.windows).any? {|window| Mouse.on? window.exit_button_rect }
 	]
+
+	if !Mouse.sees_in(args.state.scene.windows).empty?
+		if Mouse.click? and Mouse.on?(Mouse.sees_in(args.state.scene.windows)[0].exit_button_rect)
+			args.state.scene.make_invisible Mouse.sees_in(args.state.scene.windows)[0]
+		elsif Mouse.click?
+			SELECTOR.take!(Mouse.sees_in(args.state.scene.windows)[0]) 
+			SELECTOR.remember!(Geometry::coordinate_difference(Mouse.location, SELECTOR.possession.location))
+		elsif Mouse.held?
+			SELECTOR.possession.move(Geometry::coordinate_difference(Mouse.location, SELECTOR.memory))
+		elsif Mouse.up?
+			SELECTOR.forget!
+			SELECTOR.drop!
+		end
+	end
 
 	if Mouse.on?(SPRITESHEET)
 		SPRITESHEET.update_highlights(Mouse.location)
