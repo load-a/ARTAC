@@ -3,6 +3,7 @@ require 'app/mouse/button_connection.rb'
 require 'app/mouse/lattice_connection.rb'
 
 require 'app/geometry/location'
+require 'app/selector/_selector.rb'
 require 'app/level_managment/level.rb'
 
 # An alternate way of handling mouse input.
@@ -98,4 +99,30 @@ class Mouse < ArgsObject
 		end
 
 	end
+end
+
+module MouseSelector
+
+	@@selector = Selector.new
+
+	def selector
+		@@selector
+	end
+
+	def remember(this)
+		selector.remember
+	end
+
+	def forget
+		selector.forget
+	end
+
+	def take
+		selector.take
+	end
+
+	def drop
+		selector.drop
+	end
+
 end

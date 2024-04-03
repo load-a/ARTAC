@@ -1,4 +1,4 @@
-require 'app/colors/color.rb'
+require 'app/colors/_color.rb'
 
 module ButtonText
 

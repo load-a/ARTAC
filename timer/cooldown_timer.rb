@@ -1,4 +1,4 @@
-require 'app/timer/timer.rb'
+require 'app/timer/_timer.rb'
 
 class CooldownTimer < Timer
 

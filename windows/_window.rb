@@ -1,11 +1,14 @@
 require 'app/windows/window_title.rb'
-require 'app/windows/window_body.rb'
-require 'app/windows/window_buttons.rb'
+require 'app/windows/window_content.rb'
+require 'app/buttons/click_button.rb'
 
 class Window
+	extend Identifiable
+	include Identity
+
 	include Geometry
 	include WindowTitle
-	include WindowBody
+	include WindowContent
 
 	@@all = []
 	@@id_counter = 0
@@ -18,7 +21,7 @@ class Window
 	end
 
 	private
-	attr_writer :id
+	attr_writer :id, :exit_button
 	attr_accessor :section_list
 
 	def initialize(location, title, content_list)
@@ -30,6 +33,8 @@ class Window
 
 		initialize_title_section(title)
 		initialize_content_sections(content_list)
+
+		self.exit_button = ClickButton.new(location: [self.x+5, self.apex[1]-30], text: "x", size: [25, 25])
 
 		self.id = "WIN" + @@id_counter.to_s
 		@@id_counter += 1
@@ -50,13 +55,14 @@ class Window
 	end
 
 	public
-	attr_reader :id
+	attr_reader :id, :exit_button
 
 	def move(new_location)
 		offset_point = Geometry::coordinate_difference(new_location, self.location)
 
 		set_location!(new_location)
 		move_contents offset_point
+		exit_button.move_location! offset_point
 	end
 
 	def move_relative(offset)
@@ -67,20 +73,11 @@ class Window
 	def primitives
 		[
 			rect,
-			ClickButton.new(location: [ exit_button_rect[:x] ,exit_button_rect[:y] ], text: "x", size: [25, 25]).primitives,
+			exit_button.primitives,
 			title_section,
 			content_section,
 			background_hash,
 		].reverse
-	end
-
-	def exit_button_rect
-		{
-			x: self.x+5,
-			y: self.apex[1]-30,
-			w: 25,
-			h: 25,
-		}
 	end
 
 	def rect
@@ -97,6 +94,10 @@ class Window
 		background = rect
 		background[:primitive_marker] = :solid
 		background.merge(Color.white)
+	end
+
+	def info
+		all_content_objects.map {|item| item.class}
 	end
 
 end

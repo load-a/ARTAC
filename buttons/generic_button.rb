@@ -1,5 +1,5 @@
-require 'app/buttons/button.rb'
-require 'app/colors/color.rb'
+require 'app/buttons/_button.rb'
+require 'app/colors/_color.rb'
 
 require 'app/geometry/geometry.rb'
 require 'app/buttons/button_background.rb'

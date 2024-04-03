@@ -1,4 +1,4 @@
-require 'app/buttons/button.rb'
+require 'app/buttons/_button.rb'
 
 module ButtonConnection
 

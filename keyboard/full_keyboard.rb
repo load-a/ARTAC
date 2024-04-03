@@ -1,4 +1,4 @@
-require 'app/case_keys.rb'
+require 'app/_initial/threequel_alteration.rb'
 
 require 'app/keyboard/keyboard_letters.rb'
 require 'app/keyboard/keyboard_numbers.rb'

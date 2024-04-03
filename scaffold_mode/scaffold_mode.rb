@@ -1,20 +1,12 @@
-require 'app/scaffold_mode/scaffold.rb'
+require 'app/scaffold_mode/_scaffold.rb'
 require 'app/scaffold_mode/scaffold_interaction.rb'
 
 def scaffold_mode args
 
 	Renderer.add SCAFFOLD
 	Button.all.each { |button| Renderer.add button}
-	# args.state.window ||= Window.new('俳句', ['Matsuo Basho is perhaps the most revered Haiku poet in Japanese literature.','The following poem--"An Old Pond"--is perhaps his most famous work:', '', 'Furu ike ya','kawazu tobikomu','mizu no oto', ''], 0)
-	# Renderer.add args.state.window
 
 	args.state.texts = [ 
-		Mouse.formatted_info, 
-		SCAFFOLD.formatted_info, 
-		Level.formatted_info, 
-		Button.info, 
-		Renderer.all.length,
-		Keyboard.held_inputs
 	]
 
 	args.state.input_buffer ||= ''
@@ -66,15 +58,6 @@ def scaffold_mode args
 	ClickButton::previous_mode.put_left_of! ClickButton::next_mode
 	ClickButton::previous_mode.align_vertically_with! ClickButton::next_mode
 
-	# Window Interaction
-	# if Mouse.on? args.state.window and Mouse.click?
-	# 	args.state.dif_x = Mouse.x - args.state.window.x
-	# 	args.state.dif_y = Mouse.y - args.state.window.y
-	# elsif Mouse.on? args.state.window and Mouse.hold?
-	# 	args.state.window.move [Mouse.x-args.state.dif_x, Mouse.y-args.state.dif_y] unless args.state.dif_x.nil?
-	# end
-
-	# 
 	if Mouse.click? && !Mouse.on_button? && !Mouse.on_any_in?( Renderer.all.select {|object| object.kind_of? Window})
 		if Keyboard.letter_hold.include? :shift
 			# Do nothing
@@ -126,9 +109,5 @@ def scaffold_mode args
 	else
 		$gtk.show_cursor
 	end
-
-	# Renderer.remove args.state.window if args.state.window.any_true?
-	# Renderer.render
-
 
 end

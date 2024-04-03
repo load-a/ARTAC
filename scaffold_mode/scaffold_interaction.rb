@@ -1,5 +1,5 @@
-require 'app/scaffold_mode/scaffold.rb'
-require 'app/mouse/mouse.rb'
+require 'app/scaffold_mode/_scaffold.rb'
+require 'app/mouse/_mouse.rb'
 
 module ScaffoldInteraction
 	extend self

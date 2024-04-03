@@ -65,8 +65,16 @@ module WindowTitle
 		TOP_PADDING + TITLE_FONT_HEIGHT + BOTTOM_PADDING
 	end
 
-
 	public
 	attr_reader :title
+
+	def title_rect
+		{
+			x: self.x,
+			y: apex_y - title_line_height,
+			w: w,
+			h: title_line_height
+		}
+	end
 
 end

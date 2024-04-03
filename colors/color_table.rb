@@ -1,4 +1,4 @@
-require 'app/colors/color.rb'
+require 'app/colors/_color.rb'
 require 'app/geometry/dimensions.rb'
 
 class ColorTable

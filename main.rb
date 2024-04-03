@@ -1,9 +1,8 @@
 # This is the way DragonRuby recommends setting up multiple file requirements.
 
 # All basic files are 'required' here, ignoring the ones in the 'app' directory itself.
-require 'app/require_file_module.rb'
-require 'app/case_keys.rb'
-RequireFile::require_all_ruby_files
+require 'app/require_file.rb'
+RequireFile::require_all_ruby_files(directory: 'app')
 
 # Set all default values here.
 require 'app/initialize.rb'

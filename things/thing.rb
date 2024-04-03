@@ -1,6 +1,6 @@
 require 'app/geometry/geometry.rb'
 require 'app/level_managment/level.rb'
-require 'app/level_managment/selector.rb'
+require 'app/selector/_selector.rb'
 
 
 # This is the Ancestor class to all extant objects in the game. It is never created directly.
