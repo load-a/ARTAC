@@ -12,7 +12,7 @@ class Scaffold
 	attr_writer :number_buffer, :anchor_point, :cell_size
 
 	def initialize
-		set_dimensions!([0,0], [0,0])
+		set_dimensions([0,0], [0,0])
 
 		self.number_buffer = ""
 
@@ -33,7 +33,7 @@ class Scaffold
 	end
 
 	def change_location_to_match_anchor
-		set_location! anchor_point
+		set_location anchor_point
 	end
 
 	# Makes it so that the mouse sizes the scaffold from within.
@@ -81,7 +81,7 @@ class Scaffold
 	end
 
 	def clear!
-		set_dimensions!([-1, -1], [0, 0])
+		set_dimensions([-1, -1], [0, 0])
 	end
 
 	def info

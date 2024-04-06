@@ -15,7 +15,7 @@ module Movement
 	# @param location [Array<Integer>] The x and y coordinates of the place the object is being moved to.
 	# @return [Void]
 	def move_to_absolute_location(location)
-		set_location! location
+		set_location location
 	end
 
 end

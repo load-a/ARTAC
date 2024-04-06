@@ -15,15 +15,15 @@ class TextBlock
 		@raw_text = text
 		@column_limit = number_of_columns
 
-		set_location! [0, 0]
-		set_size! [@column_limit*CHARACTER_WIDTH, text_block_height]
+		set_location [0, 0]
+		set_size [@column_limit*CHARACTER_WIDTH, text_block_height]
 	end
 
 
 	public
 	attr_accessor :y
 
-	def set_location! new_location
+	def set_location new_location
 		self.x = new_location[0]
 		self.y = new_location[1] #+ text_block_height
 	end

@@ -1,12 +1,12 @@
-require 'app/geometry/geometry.rb'
-require 'app/level_managment/level.rb'
+require 'app/geometry/planar_geometry.rb'
+require 'app/level_managment/_level.rb'
 require 'app/selector/_selector.rb'
 
 
 # This is the Ancestor class to all extant objects in the game. It is never created directly.
 
 class Thing
-	include Geometry
+	include PlanarGeometry
 
 	@@id_count = 0
 	# Used to generate ID's for all descendants
@@ -20,7 +20,7 @@ class Thing
 	def initialize(location, size)
 		@thing_number = @@id_count.to_s
 		self.type = :thing
-		set_dimensions!(location, size)
+		set_dimensions(location, size)
 
 		Level.all << self unless (self.kind_of?(Sprite) || self.kind_of?(Selector)) # Sprites are excluded because they are attached to other objects
 		@@id_count += 1

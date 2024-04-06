@@ -1,8 +1,8 @@
 require 'app/buttons/click_button.rb'
 
 CLICK_BUTTON_LIST = [
-	ClickButton.new(location: [53, 10], text: "create lattice"),
-	ClickButton.new(text: "clear lattice"),
+	ClickButton.new(location: [53, 10], text: "create Grid"),
+	ClickButton.new(text: "clear Grid"),
 	ClickButton.new(text: "cell size:"),
 	ClickButton.new(text: 'mode: 100'),
 	ClickButton.new(location: [1120, 10], text: 'next mode' ),
@@ -11,11 +11,11 @@ CLICK_BUTTON_LIST = [
 
 module ClickButtonList
 
-	def commit_lattice
+	def commit_grid
 		CLICK_BUTTON_LIST[0]
 	end
 
-	def clear_lattice
+	def clear_grid
 		CLICK_BUTTON_LIST[1]
 	end
 

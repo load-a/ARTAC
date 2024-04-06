@@ -1,26 +1,35 @@
-class Converter
+class UnitConverter
+
+	private
+	attr_writer :unit
+
 	def initialize scale_unit
-		@unit = scale_unit
+		self.unit = scale_unit
 	end
 
-	def change_unit!(new_unit)
-		return if new_unit == @unit
-		@unit = new_unit
+	public
+	attr_reader :unit
+
+	def change_unit!(_scalenew_unit)
+		return if new_scale_unit == unit
+		self.unit = new_scale_unit
 	end
 
-	def absolute_to_interval(dimension, reference_axis = 0) # => [69, 420] -> [64, 416]
-	  n = dimension - reference_axis
-	  r = reference_axis
-	  (n - (n % @unit)) + r
+	def calculate_target_location(input, offset = 0) # => [69, 420] -> [64, 416]
+	  adjustment = input - offset
+	  excess = (adjustment % unit)
+
+	  (adjustment - excess) + offset
 	end
 
-	def absolute_to_cell(dimension, reference_axis = 0)
-		cell = (absolute_to_interval(dimension, reference_axis) - reference_axis) / @unit
+	def calculate_target_cell(input, offset = 0)
+		cell = (calculate_target_location(input, offset) - offset) / unit
 		cell.floor
 	end
 
+	# @note This may be removed in the future.
 	def interval_to_cell(interval, origin_offset = 0) # => [64, 416] -> [4, 26]
-	  (interval / @unit - origin_offset / @unit).floor
+	  (interval / unit - origin_offset / unit).floor
 	end
 
 end

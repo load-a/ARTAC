@@ -10,7 +10,7 @@ class ColorTable
 	BAR_WIDTH = 100
 	
 	def initialize(location)
-		self.set_location! location
+		self.set_location location
 	end
 
 	public

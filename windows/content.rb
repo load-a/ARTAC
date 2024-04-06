@@ -6,12 +6,12 @@ class Content
 		self.id = id
 	end
 
-	def set_location!(new_location)
-		content_object.set_location! new_location
+	def set_location(new_location)
+		content_object.set_location new_location
 	end
 
-	def move_location!(new_relative_location)
-		content_object.move! new_relative_location
+	def adjust_location(new_relative_location)
+		content_object.move new_relative_location
 	end
 
 	def boundaries

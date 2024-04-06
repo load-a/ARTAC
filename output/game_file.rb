@@ -1,9 +1,9 @@
 require 'app/input/args_object.rb'
 
-require 'app/level_managment/level.rb'
+require 'app/level_managment/_level.rb'
 
-require 'app/things/lattices/lattice.rb'
-require 'app/things/lattices/sprite_sheet.rb'
+require 'app/things/grids/_grid.rb'
+require 'app/things/grids/sprite_sheet.rb'
 require 'app/things/tiles/tile.rb'
 require 'app/things/tiles/actor.rb'
 
@@ -88,7 +88,7 @@ class GameFile < ArgsObject
 					advance_stream_indexes(16, 8)
 					unit = read_binary_stream
 
-					Lattice.new(location, size, unit)
+					Grid.new(location, size, unit)
 
 					advance_stream_indexes
 
@@ -144,7 +144,7 @@ class GameFile < ArgsObject
 					advance_stream_indexes
 
 				else
-					raise InvalidTypeError, "Gamefile#load only accounts for :lattice(1), :sprite_sheet(17), tile(2) or actor(3). Found: #{raw_file_text[start_index..end_index]}"
+					raise InvalidTypeError, "Gamefile#load only accounts for :Grid(1), :sprite_sheet(17), tile(2) or actor(3). Found: #{raw_file_text[start_index..end_index]}"
 				end
 
 			end

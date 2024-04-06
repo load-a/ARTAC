@@ -1,6 +1,6 @@
 require 'app/input/args_object.rb'
-require	'app/windows/window.rb'
-require 'app/things/lattices/lattice.rb'
+require	'app/windows/_window.rb'
+require 'app/things/grids/_grid.rb'
 require 'app/things/tiles/actor.rb'
 require 'app/things/tiles/tile.rb'
 
@@ -13,7 +13,7 @@ class Renderer < ArgsObject
 	@@layer_order = [:background, :midground, :foreground]
 	@@element_order = [:background_element, :foreground_element, :border]
 	# Symbols represent classes that have not been implemented yet
-	# @@class_order = [:Tooltip, Window, :Menu, Lattice, TextBlock, Actor, Tile, :Background].reverse
+	# @@class_order = [:Tooltip, Window, :Menu, Grid, TextBlock, Actor, Tile, :Background].reverse
 
 	class << self
 

@@ -32,7 +32,7 @@ class Level
 
 		def render_order
 			[
-				Lattice,
+				Grid,
 				Highlighter,
 				Actor,
 				Tile

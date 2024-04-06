@@ -9,7 +9,7 @@ module Position
 	end
 
 	def put_left_of!(this, spacing: 10)
-		set_x!( left_of(this, spacing: spacing) )
+		set_x( left_of(this, spacing: spacing) )
 	end
 
 	def left_of?(this)
@@ -22,7 +22,7 @@ module Position
 	end
 
 	def put_right_of!(this, spacing: 10)
-		set_x!(right_of(this, spacing: spacing))
+		set_x(right_of(this, spacing: spacing))
 	end
 
 	def right_of?(this)
@@ -35,7 +35,7 @@ module Position
 	end
 
 	def put_above!(this, spacing: 10)
-		set_y!(above(this, spacing: spacing))
+		set_y(above(this, spacing: spacing))
 	end
 
 	def above?(this)
@@ -48,7 +48,7 @@ module Position
 	end
 
 	def put_below!(this, spacing: 10)
-		set_y!(below(this, spacing: spacing))
+		set_y(below(this, spacing: spacing))
 	end
 
 	def below?(this)

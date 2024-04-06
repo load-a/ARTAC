@@ -5,6 +5,4 @@ def tick args
 	Update::objects args
 	Update::outputs args
 
-	scaffold_mode args
-
 end

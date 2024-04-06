@@ -1,10 +1,10 @@
 module SceneLists
-	def lattices(show_visible = true)
-		show_visible ? visible.select { |item| item.kind_of? Lattice } : invisible.select { |item| item.kind_of? Lattice }
+	def grids(show_visible = true)
+		show_visible ? visible.select { |item| item.kind_of? Grid } : invisible.select { |item| item.kind_of? Grid }
 	end
 
-	def all_lattices
-		extant.select { |item| item.kind_of? Lattice}
+	def all_grids
+		extant.select { |item| item.kind_of? Grid}
 	end
 
 

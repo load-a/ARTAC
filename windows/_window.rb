@@ -6,7 +6,7 @@ class Window
 	extend Identifiable
 	include Identity
 
-	include Geometry
+	include PlanarGeometry
 	include WindowTitle
 	include WindowContent
 
@@ -27,14 +27,14 @@ class Window
 	def initialize(location, title, content_list)
 
 		location[1] -= BOTTOM_PADDING # This will be added back in the render
-		set_dimensions!(location, [0, 0])
+		set_dimensions(location, [0, 0])
 
 		self.section_list = Array.new
 
 		initialize_title_section(title)
 		initialize_content_sections(content_list)
 
-		self.exit_button = ClickButton.new(location: [self.x+5, self.apex[1]-30], text: "x", size: [25, 25])
+		self.exit_button = ClickButton.new(location: [self.x+5, self.apex_y-30], text: "x", size: [25, 25])
 
 		self.id = "WIN" + @@id_counter.to_s
 		@@id_counter += 1
@@ -60,9 +60,9 @@ class Window
 	def move(new_location)
 		offset_point = Geometry::coordinate_difference(new_location, self.location)
 
-		set_location!(new_location)
+		set_location(new_location)
 		move_contents offset_point
-		exit_button.move_location! offset_point
+		exit_button.adjust_location offset_point
 	end
 
 	def move_relative(offset)

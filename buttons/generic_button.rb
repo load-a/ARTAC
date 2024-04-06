@@ -1,7 +1,7 @@
 require 'app/buttons/_button.rb'
 require 'app/colors/_color.rb'
 
-require 'app/geometry/geometry.rb'
+require 'app/geometry/planar_geometry.rb'
 require 'app/buttons/button_background.rb'
 require 'app/buttons/button_text.rb'
 
@@ -9,14 +9,14 @@ require 'app/buttons/button_text.rb'
 # @note This class is not meant to be instantiated on its own.
 
 class GenericButton < Button
-	include Geometry
+	include PlanarGeometry
 	include ButtonBackground
 	include ButtonText
 		
 	def initialize(location: [0,0], size: [150, 50], text: "GENERIC BUTTON")
 		super()
 
-		set_dimensions!(location, size)
+		set_dimensions(location, size)
 		initialize_background
 		initialize_text(text)
 

@@ -1,6 +1,6 @@
 require 'app/colors/colors.rb'
 
-# A class that creates highlights for the Lattice class.
+# A class that creates highlights for the Grid class.
 
 class Highlighter
 	include Colors
@@ -80,7 +80,7 @@ class Highlighter
 				x: location[0] + unit_length / 2,
 				x2: location[0] + unit_length / 2,
 				y: base[1] + 1,
-				y2: apex[1] - 1,
+				y2: apex_y - 1,
 				primitive_marker: :line
 			}.merge(color)
 		]

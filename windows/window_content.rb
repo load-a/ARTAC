@@ -37,7 +37,7 @@ module WindowContent
 		content_height = content.boundaries[:h]+TOP_PADDING
 
 		all_content_objects.each { |item|
-			item.move_location! [0, content_height]
+			item.adjust_location [0, content_height]
 		}
 		
 		self.height += content_height
@@ -47,12 +47,12 @@ module WindowContent
 	def relocate_content(content)
 		new_x = self.x + SIDE_PADDING
 		new_y = section_list.last[:y]# - TOP_PADDING - content.boundaries[:h]
-		content.set_location! [new_x, new_y]
+		content.set_location [new_x, new_y]
 	end
 
 	def move_contents(new_relative_location)
 		all_content_objects.each { |content|
-			content.move_location! new_relative_location
+			content.adjust_location new_relative_location
 		}
 	end
 

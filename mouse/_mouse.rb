@@ -1,17 +1,17 @@
 require 'app/input/args_object.rb'
 require 'app/mouse/button_connection.rb'
-require 'app/mouse/lattice_connection.rb'
+require 'app/mouse/grid_connection.rb'
 
 require 'app/geometry/location'
 require 'app/selector/_selector.rb'
-require 'app/level_managment/level.rb'
+require 'app/level_managment/_level.rb'
 
 # An alternate way of handling mouse input.
 # @note Mouse#update must be called every tick you wish to use this class.
 
 class Mouse < ArgsObject
 	extend Location
-	extend LatticeConnection
+	extend GridConnection
 	extend ButtonConnection
 
 	class << self

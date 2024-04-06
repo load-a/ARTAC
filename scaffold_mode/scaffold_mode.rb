@@ -11,24 +11,24 @@ def scaffold_mode args
 
 	args.state.input_buffer ||= ''
 
-	# Commit SCAFFOLD to new Lattice
-	if ClickButton::commit_lattice.true? and Level.every(Lattice).empty?
-		Renderer.add( Lattice.new(SCAFFOLD.location, SCAFFOLD.size.map {|e| e/SCAFFOLD.cell_size}, SCAFFOLD.cell_size) )
+	# Commit SCAFFOLD to new Grid
+	if ClickButton::commit_grid.true? and Level.every(Grid).empty?
+		Renderer.add( Grid.new(SCAFFOLD.location, SCAFFOLD.size.map {|e| e/SCAFFOLD.cell_size}, SCAFFOLD.cell_size) )
 	end
 
 	# Clear SCAFFOLD
-	ClickButton::clear_lattice.put_right_of!(ClickButton::commit_lattice)
-	ClickButton::clear_lattice.align_vertically_with!(ClickButton::commit_lattice)
-	if ClickButton::clear_lattice.true?
+	ClickButton::clear_grid.put_right_of!(ClickButton::commit_grid)
+	ClickButton::clear_grid.align_vertically_with!(ClickButton::commit_grid)
+	if ClickButton::clear_grid.true?
 		SCAFFOLD.clear!
-		Renderer.remove( Level.every(Lattice)[0] )
-		Level.delete_every!(Lattice)
+		Renderer.remove( Level.every(Grid)[0] )
+		Level.delete_every!(Grid)
 	end
 
 	# Change Cell Size
-	ClickButton::cell_size.put_right_of!(ClickButton::clear_lattice)
+	ClickButton::cell_size.put_right_of!(ClickButton::clear_grid)
 	ClickButton::cell_size.resize_to_fit_text
-	ClickButton::cell_size.align_vertically_with!(ClickButton::commit_lattice)
+	ClickButton::cell_size.align_vertically_with!(ClickButton::commit_grid)
 	ClickButton::cell_size.set_text!("cell size: " + (args.state.input_buffer == "" ? SCAFFOLD.cell_size.to_s : args.state.input_buffer))
 	ClickButton::cell_size.release if !Mouse.on?(args.state.click)	and ClickButton::cell_size.true?
 	if Keyboard.number?
@@ -52,7 +52,7 @@ def scaffold_mode args
 		args.state.mode = 0 if args.state.mode > 7
 		ClickButton::mode_cycle.set_text!('mode: %03b' % [args.state.mode])
 	end
-	Level.every(Lattice)[0].highlight_mode = args.state.mode unless Level.every(Lattice).empty?
+	Level.every(Grid)[0].highlight_mode = args.state.mode unless Level.every(Grid).empty?
 
 	# Mode/Layer Shift
 	ClickButton::previous_mode.put_left_of! ClickButton::next_mode
@@ -103,8 +103,8 @@ def scaffold_mode args
 		}.merge(Color.red)
 	end
 
-	# Hide mouse if on a highlighted lattice
-	if Mouse.on_lattice? and (args.state.mode > 0) and !(Mouse.x > 1050 and Mouse.y > 510)
+	# Hide mouse if on a highlighted Grid
+	if Mouse.on_grid? and (args.state.mode > 0) and !(Mouse.x > 1050 and Mouse.y > 510)
 		$gtk.hide_cursor
 	else
 		$gtk.show_cursor

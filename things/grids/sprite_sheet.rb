@@ -1,8 +1,8 @@
-require 'app/things/lattices/lattice.rb'
+require 'app/things/grids/_grid.rb'
 require 'app/constants/sprite_hash.rb'
 require 'app/constants/constants.rb'
 
-SPRITESHEET = Lattice.new([1000, 400], [16, 16], 16)
+SPRITESHEET = Grid.new([1000, 400], [16, 16], 16)
 SPRITESHEET.highlight_mode = 0b101
 SPRITESHEET.highlighter.change_color!(Color.yellow)
 
@@ -19,8 +19,8 @@ def SPRITESHEET.sprite
 end
 
 def SPRITESHEET.calculate_cell_location(location)
-	cell_x = converter.absolute_to_cell(location[0], x)
-	cell_y = converter.absolute_to_cell(location[1], y)
+	cell_x = UnitConverter.calculate_target_cell(location[0], x)
+	cell_y = UnitConverter.calculate_target_cell(location[1], y)
 
 	cell_x = nil if cell_x < 0 || cell_x > right_side / unit_length
 	cell_y = nil if cell_y < 0 || cell_y > top_side / unit_length
